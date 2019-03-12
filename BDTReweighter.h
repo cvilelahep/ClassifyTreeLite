@@ -20,7 +20,7 @@ class BDTReweighter {
   
   virtual float predict(union BDTReweighter::BDTReweighterFeature* data, int pred_margin) = 0;
 
-  float predictWithMultiplier(union BDTReweighter::BDTReweighterFeature* data, int pred_margin){ return multiplier*predict(data, pred_margin); }
+  float GetWeight(union BDTReweighter::BDTReweighterFeature* data, int pred_margin){ return multiplier*(1-1./predict(data, pred_margin)); }
 
  BDTReweighter() : multiplier (1.) {};
  BDTReweighter(float mult) : multiplier (mult) {};
