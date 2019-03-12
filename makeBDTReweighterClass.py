@@ -30,10 +30,10 @@ def main(pathToTreeLiteZip, outputClassName, multiplier, removeMissing, outputPa
             for line in old_file:
                 if '#include \"header.h\"' in line :
                     new_file.write('#include \"BDTReweighter.h\"\n')
-                    new_file.write('class MissingProtonFakeDataBDTRW_FHC : public BDTReweighter {\n')
+                    new_file.write('class '+outputClassName+' : public BDTReweighter {\n')
                     new_file.write(' public :\n')
-                    new_file.write(' MissingProtonFakeDataBDTRW_FHC() : BDTReweighter('+multiplier+') {;}\n')
-                    new_file.write('  ~MissingProtonFakeDataBDTRW_FHC() {;}\n')
+                    new_file.write(' '+outputClassName+'() : BDTReweighter('+multiplier+') {;}\n')
+                    new_file.write('  ~'+outputClassName+'() {;}\n')
                 elif 'float predict(union Entry* data, int pred_margin) {' in line :
                     new_file.write('   float predict(union BDTReweighter::BDTReweighterFeature* data, int pred_margin) {\n')
                 elif removeMissing and '.missing' in line :
@@ -65,7 +65,7 @@ if __name__ == "__main__" :
     outputClassName = sys.argv[2]
     multiplier = sys.argv[3]
 
-    if len(sys.argv) == 5 :
+    if len(sys.argv) in [5,6] :
         removeMissing = sys.argv[4]
     else :
         removeMissing = 0
