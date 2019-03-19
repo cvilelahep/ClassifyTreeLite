@@ -66,13 +66,13 @@ if __name__ == "__main__" :
     multiplier = sys.argv[3]
 
     if len(sys.argv) in [5,6] :
-        removeMissing = sys.argv[4]
+        removeMissing = bool(int(sys.argv[4]))
     else :
-        removeMissing = 0
+        removeMissing = False
 
     if len(sys.argv) == 6 :
         outputPath = sys.argv[5]
     else :
         outputPath = './'
 
-    main(pathToTreeLiteZip, outputClassName, multiplier, removeMissing, outputPath)
+    main(pathToTreeLiteZip = pathToTreeLiteZip, outputClassName = outputClassName, multiplier = multiplier, removeMissing = removeMissing, outputPath = outputPath)
