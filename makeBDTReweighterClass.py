@@ -36,8 +36,10 @@ def main(pathToTreeLiteZip, outputClassName, multiplier, removeMissing, outputPa
                     new_file.write('  ~'+outputClassName+'() {;}\n')
                 elif 'float predict(union Entry* data, int pred_margin) {' in line :
                     new_file.write('   float predict(union BDTReweighter::BDTReweighterFeature* data, int pred_margin) {\n')
-                elif removeMissing and '.missing' in line :
-                    new_file.write(re.sub("\!\(data\[.*\].missing \!= -1\) \|\|", "", line) ) # There is a different "missing" statement that we need to take into account.
+                elif removeMissing and ('.missing' in line) and ('||' in line) :
+                    new_file.write(re.sub("\!\(data\[.*\].missing \!= -1\) \|\|", "", line) )
+                elif removeMissing and ('.missing' in line) and ('&&' in line) :
+                    new_file.write(re.sub("\\(data\[.*\].missing \!= -1\) \&\&", "", line) )
                 else :
                     new_file.write(line)
             new_file.write('};\n')
